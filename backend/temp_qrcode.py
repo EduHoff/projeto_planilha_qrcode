@@ -2,6 +2,8 @@ import platform
 import subprocess
 import qrcode
 
+#OBS.: enquanto não tiver um lugar certo para colocar essa lógica de gerar um qr code das informações de uma nota fiscal (vai ser útil para usar como exemplo) vou deixar nesse arquivo temp para não atrapalhar o resto
+
 file_path: str = None
 
 if platform.system() == "Windows":

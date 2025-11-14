@@ -1,37 +1,25 @@
-# README temporário sem está organizado ainda
+# projeto sem um nome certo ainda
 
+## Instalação
 
+Pré requisitos:
+- Git
+- Docker
 
+```
+git clone https://github.com/EduHoff/projeto_planilha_qrcode.git
+cd projeto_planilha_qrcode
+docker compose up --build
+```
 
-apt install python3.12-venv
-#para poder criar ambientes locais das bibliotecas
+## Iniciar
 
-python3 -m venv venv
-#cria o ambiente virtual para instalar as bibliotecas
-obs.: não esqueça de ter um .gitignore
+```
+docker compose up
+```
 
-source venv/bin/activate
-#ativa o ambiente virtual
+## Encerrar
 
-pip install pandas
-#exemplo da instalação de uma biblioteca
-
- pip freeze > requirements.txt
-#criar arquivo com as dependências do programa python
-
-
-(Linux/MacOS)
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-(Windows)
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-#códigos após o git clone para recriar o ambiente do programa
-
-
-
-FastApi:
-fastapi dev main.py (isso vai começar o servido do Python)
+```
+docker compose down
+```

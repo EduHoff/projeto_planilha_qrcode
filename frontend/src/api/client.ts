@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000', // backend (FastAPI)
+  baseURL: import.meta.env.DEV
+    ? "http://localhost:8000"   // backend (FastAPI) navegador
+    : "http://backend:8000",    // backend (FastAPI) Docker
 });
 
 export default api;

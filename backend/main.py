@@ -4,10 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Isso permite que o React (em outra porta) acesse a API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ou ["http://localhost:5173"] se quiser restringir
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

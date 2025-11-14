@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "./api/client";
+import UserPath from "./components/UserPath"
 
 function App() {
   const [message, setMessage] = useState<string>("Carregando...");
@@ -16,8 +17,9 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div style={{display:"flex", flexDirection:"column",justifyContent:"center", alignItems:"center"}}>
       <h1>{message}</h1>
+      <UserPath></UserPath>
     </div>
   );
 }

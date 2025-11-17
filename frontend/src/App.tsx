@@ -1,26 +1,28 @@
-import { useEffect, useState } from "react";
-import api from "./api/client";
-import UserPath from "./components/UserPath"
+import React from 'react';
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
-function App() {
-  const [message, setMessage] = useState<string>("Carregando...");
+import Home from "./pages/HomeTESTE";
+import About from "./pages/AboutTESTE"; 
 
-  useEffect(() => {
-    api.get("/api/hello")
-      .then(response => {
-        setMessage(response.data.message);
-      })
-      .catch(error => {
-        console.error("Erro ao buscar dados:", error);
-        setMessage("Erro ao conectar com o servidor");
-      });
-  }, []);
-
+const App: React.FC = () => {
   return (
-    <div style={{display:"flex", flexDirection:"column",justifyContent:"center", alignItems:"center"}}>
-      <h1>{message}</h1>
-      <UserPath></UserPath>
-    </div>
+    //Minha ideia é ter isso mais c omo uma base para saber como o router funciona (não vai ficar assim a versão final, é claro)
+    <BrowserRouter>
+      <nav style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>
+        <Link to="/" style={{ margin: "0 10px" }}>Home</Link>
+        <Link to="/about" style={{ margin: "0 10px" }}>Sobre</Link>
+      </nav>
+
+      <div style={{display:"flex", flexDirection:"column",justifyContent:"center", alignItems:"center", padding: "20px"}}>
+        
+        <Routes>
+          <Route path="/" element={<Home />} /> 
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<h1>404: Página não encontrada</h1>} />
+        </Routes>
+        
+      </div>
+    </BrowserRouter>
   );
 }
 

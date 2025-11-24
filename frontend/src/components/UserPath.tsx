@@ -12,8 +12,13 @@ function UserPath() {
         const windowsPathRegex = /^[a-zA-Z]:[/\\](?:[^\\/:*?"<>|\r\n]+[/\\]?)*[^\\/:*?"<>|\r\n]*$/
         const unixPathRegex = /^\/([^/\0]+[/\0]?)*$/
 
+        if(path == localStorage.getItem("UserPath")){
+            alert("Planilha já foi registrada previamente!")
+            return
+        }
+
         if (!windowsPathRegex.test(path) && !unixPathRegex.test(path)){
-            alert("Caminho inválido! \n\nDica: o caminho precisa ser absoluto e estar dentro da pasta pessoal do usuário \n\n Exemplos.: C:\\Users\\nome_usuario\\exemplo.csv ou /home/nome_usuario/exemplo.csv.")
+            alert("Caminho inválido! \n\nDica: o caminho precisa ser absoluto e estar dentro da pasta pessoal do usuário \n\nExemplos.: C:\\Users\\nome_usuario\\exemplo.csv ou /home/nome_usuario/exemplo.csv.")
             return
         }
 
@@ -21,6 +26,8 @@ function UserPath() {
             alert("Formato de arquivo inválido! \n\n Formatos aceitos: xlsx, xlsm, xls e csv")
             return
         }
+
+        
 
         try {
             const response = await api.post("/api/check-file", {
@@ -41,16 +48,8 @@ function UserPath() {
         } catch (error) {
             console.error("Erro na comunicação com a API:", error);
             alert("Erro ao conectar com o backend. Tente novamente.");
-        } finally {
-            // setLoading(false); // Desativa o carregamento
         }
 
-
-        //PARTE ANTIGA
-        //localStorage.setItem("UserPath",path)
-        //console.log("Caminho coletado:", localStorage.getItem("UserPath"))
-        //alert("Caminho salvo com sucesso!")
-        //setPath("");
     };
     
 

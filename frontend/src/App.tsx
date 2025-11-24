@@ -1,12 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
+import api from "./api/client"
 
 import Home from "./pages/HomeTESTE";
 import About from "./pages/AboutTESTE"; 
 
-//RECADO PARA MIM MESMO NO FUTURO: ainda preciso criar uma lógica que quando o projeto inicia pela primeira vez ou quando o local.storage com o caminho é atualizado (não tenho certeza se isso é relevante já que o file_check.py já cobre isso) o react vai lá e mande o novo caminho para o python e inclusive evite fazer isso caso o caminho enviado seja o mesmo que já está armazenado (o que seria bom adicionar essa validação extra) mas PRINCIPALEMENTE o que leia o local.storage da primeira vez que é iniciado com alguma função que o React deve ter com certeza
+
 
 const App: React.FC = () => {
+
+  //Verifica se tem um caminho salvo no localStorage (e se ele é valido) e manda para o Python. Roda apenas na primeira vez que o projeto é iniciado
+  useEffect(() => {
+    const UserPath = localStorage.getItem("UserPath");
+
+    if (UserPath) {
+      
+      const path_check = async () => {
+        try {
+          const response = await api.post("/api/check-file", {
+              file_path: UserPath
+          });
+
+          const fileExists = response.data.exists; 
+
+          if (!fileExists) {
+              alert("Atenção: O arquivo salvo (" + UserPath + ") não foi encontrado no servidor. Por favor, revalide o caminho.");
+              localStorage.removeItem("UserPath");
+          }
+
+        } catch (error) {
+            console.error("Erro na comunicação com a API:", error);
+        }
+      };
+
+      path_check();
+    }
+  }, []);
+
   return (
     //Minha ideia é ter isso mais c omo uma base para saber como o router funciona (não vai ficar assim a versão final, é claro)
     <BrowserRouter>

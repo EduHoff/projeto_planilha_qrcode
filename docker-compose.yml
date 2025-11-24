@@ -6,6 +6,9 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+      - ${HOST_HOME}:/host_root
+    environment:
+      - HOST_HOME_PATH=${HOST_HOME}
     networks:
       - app-network
 

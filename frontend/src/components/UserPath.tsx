@@ -1,18 +1,19 @@
 import { useState } from "react"
+import api from "../api/client";
 
 function UserPath() {
     const [path, setPath] = useState<string>("")
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPath(e.target.value)
+        setPath(e.target.value.trim())
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const windowsPathRegex = /^[a-zA-Z]:[/\\](?:[^\\/:*?"<>|\r\n]+[/\\]?)*[^\\/:*?"<>|\r\n]*$/
         const unixPathRegex = /^\/([^/\0]+[/\0]?)*$/
 
-        if (!windowsPathRegex.test(path.trim()) && !unixPathRegex.test(path.trim())){
-            alert("Caminho inválido! \n\nDica: o caminho precisa ser absoluto.")
+        if (!windowsPathRegex.test(path) && !unixPathRegex.test(path)){
+            alert("Caminho inválido! \n\nDica: o caminho precisa ser absoluto e estar dentro da pasta pessoal do usuário \n\n Exemplos.: C:\\Users\\nome_usuario\\exemplo.csv ou /home/nome_usuario/exemplo.csv.")
             return
         }
 
@@ -21,10 +22,35 @@ function UserPath() {
             return
         }
 
-        localStorage.setItem("UserPath",path)
-        console.log("Caminho coletado:", localStorage.getItem("UserPath"))
-        alert("Caminho salvo com sucesso!")
-        setPath("");
+        try {
+            const response = await api.post("/api/check-file", {
+                file_path: path
+            });
+
+            const fileExists = response.data.exists; 
+
+            if (fileExists) {
+                localStorage.setItem("UserPath", path);
+                console.log("Caminho coletado:", localStorage.getItem("UserPath"));
+                alert("Caminho salvo com sucesso!");
+                setPath("");
+            } else {
+                alert("Erro: Arquivo não encontrado no servidor.");
+            }
+
+        } catch (error) {
+            console.error("Erro na comunicação com a API:", error);
+            alert("Erro ao conectar com o backend. Tente novamente.");
+        } finally {
+            // setLoading(false); // Desativa o carregamento
+        }
+
+
+        //PARTE ANTIGA
+        //localStorage.setItem("UserPath",path)
+        //console.log("Caminho coletado:", localStorage.getItem("UserPath"))
+        //alert("Caminho salvo com sucesso!")
+        //setPath("");
     };
     
 

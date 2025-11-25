@@ -54,7 +54,7 @@ function UserPath() {
     
 
   return (
-    <div>
+    <div style={{display:"flex",flexDirection:"column"}}>
         <input 
             type="text" 
             placeholder="C:/pasta/planilha.xlsx"
@@ -62,7 +62,7 @@ function UserPath() {
             onChange={handleInputChange} 
         />
 
-        <button onClick={handleSubmit}>Confirmar</button>
+        <button onClick={handleSubmit} style={{width: 100, display: "flex", justifyContent: "center", alignItems: "center"}}>Confirmar</button>
     </div>
   );
 }

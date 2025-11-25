@@ -19,8 +19,10 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <h2>Página Inicial</h2>
-      <h1>{message}</h1>
+      <h1>Página Inicial</h1>
+      <h2>Aqui é feito a conexão com a planilha local</h2>
+      <p><strong style={{color:'lightblue'}}>React: </strong>{localStorage.getItem("UserPath")}</p>
+      <p><strong style={{color:'yellow'}}>Python: </strong>{message}</p>
       <UserPath />
     </div>
   );

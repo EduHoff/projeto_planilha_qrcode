@@ -55,7 +55,7 @@ const App: React.FC = () => {
         
         <Routes>
           <Route path="/" element={<Home />} /> 
-          <Route path="/spreadsheet" element={<Spreadsheet />} />
+          <Route path="/spreadsheet/*" element={<Spreadsheet />} />
           <Route path="/mobile" element={<Mobile />} />
           <Route path="*" element={<h1>404: Página não encontrada</h1>} />
         </Routes>

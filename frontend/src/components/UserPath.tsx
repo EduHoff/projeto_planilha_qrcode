@@ -18,7 +18,7 @@ function UserPath() {
         }
 
         if (!windowsPathRegex.test(path) && !unixPathRegex.test(path)){
-            alert("Caminho inválido! \n\nDica: o caminho precisa ser absoluto e estar dentro da pasta pessoal do usuário \n\nExemplos.: C:\\Users\\nome_usuario\\exemplo.csv ou /home/nome_usuario/exemplo.csv.")
+            alert("Caminho inválido! \n\nDica: o caminho precisa ser absoluto e estar dentro da pasta pessoal do usuário \n\nExemplos.:\n\n C:\\Users\\nome_usuario\\exemplo.csv \n\n/home/nome_usuario/exemplo.csv")
             return
         }
 

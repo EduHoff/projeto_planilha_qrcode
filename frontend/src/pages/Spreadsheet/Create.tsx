@@ -1,9 +1,11 @@
 import React from 'react';
+import FormCreate from '../../components/FormCreate';
 
 const Create: React.FC = () => {
   return (
     <div>
-      <h2>Create</h2>
+      <h1>Aqui é adicionado os dados sobre a nota fiscal</h1>
+      <FormCreate/>
     </div>
   );
 };

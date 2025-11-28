@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from . import file_check
+
+from api.file_check import router as file_check_router
+from api.crud.create import router as crud_create_router
+
 from spreadsheet_directory_path import spreadsheet_directory_path as sdp #isso é apenas para testar se o python está armazenado o diretório com a planilha
 
 
@@ -18,7 +21,8 @@ def create_app() -> FastAPI:
     )
     
 
-    app.include_router(file_check.router, prefix="/api") 
+    app.include_router(file_check_router, prefix="/api")
+    app.include_router(crud_create_router, prefix="/api/crud")
 
     @app.get("/api/hello")
     def hello():

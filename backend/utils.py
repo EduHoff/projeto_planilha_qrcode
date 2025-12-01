@@ -4,6 +4,7 @@ import xlwt
 import openpyxl
 import os
 from pathlib import Path
+from entities.column_map import column_map
 
 
 # =====================================================================
@@ -150,3 +151,80 @@ def add_row(path: str | Path, data: list) -> int:
         return append_to_xlsx(path, data)
 
     raise ValueError(f"Formato de arquivo não suportado: {path}")
+
+
+
+# ------------------------------------------------------------
+# Leitura de CSV sem cabeçalho
+# ------------------------------------------------------------
+def read_csv_no_header(path: str | Path) -> list[list]:
+    if not os.path.exists(path):
+        return []
+
+    rows = []
+    with open(path, "r", newline="") as file:
+        reader = csv.reader(file)
+        for row in reader:
+            if not any(cell.strip() for cell in row):
+                continue
+            rows.append(row)
+
+    return rows
+
+
+# ------------------------------------------------------------
+# Filtro
+# ------------------------------------------------------------
+def filter_rows(path: Path, filters: dict) -> list[dict]:
+    data = read_csv_no_header(path)
+
+    result = []
+    for row in data:
+        ok = True
+        for key, value in filters.items():
+            col_index = column_map.get(key)
+
+            if col_index is None:
+                ok = False
+                break
+
+            if str(row[col_index]).lower() != str(value).lower():
+                ok = False
+                break
+
+        if ok:
+            result.append(row)
+
+    return result
+
+
+# ------------------------------------------------------------
+# Leitura completa (sem filtro)
+# ------------------------------------------------------------
+def read_rows(path: Path) -> list[list]:
+    return read_csv_no_header(path)
+
+
+# ------------------------------------------------------------
+# Inserção de nova linha
+# ------------------------------------------------------------
+def add_row(path: Path, values: list):
+    new_id = get_next_id(path)
+
+    row = [new_id] + values
+
+    with open(path, "a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(row)
+
+    return new_id
+
+
+def get_next_id(path: Path) -> int:
+    rows = read_csv_no_header(path)
+
+    if not rows:
+        return 1
+
+    last_id = int(rows[-1][0])
+    return last_id + 1

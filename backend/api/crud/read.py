@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 class ReadRequest(BaseModel):
-    filters: dict | None = None
+    filters: dict | str | None = None
 
 
 @router.post("/read")
@@ -25,7 +25,9 @@ async def read_items(body: ReadRequest):
         if not path.exists():
             raise HTTPException(status_code=404, detail=f"Arquivo '{path}' não encontrado.")
 
-        if body.filters:
+        if body.filters == "tudo":
+            rows = read_rows(path)
+        elif isinstance(body.filters, dict) and len(body.filters) > 0:
             rows = filter_rows(path, body.filters)
         else:
             rows = read_rows(path)

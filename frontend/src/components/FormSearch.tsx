@@ -3,6 +3,7 @@ import api from "../api/client";
 import type { NotaFiscal } from "../entities/NotaFiscal";
 
 type SearchField = "tudo" | "id" | "nome";
+type RawRow = [string, string, string];
 
 interface FormSearchProps {
     onResults: (data: NotaFiscal[]) => void;
@@ -26,8 +27,14 @@ function FormSearch({ onResults }: FormSearchProps) {
         try {
             const response = await api.post("/api/crud/read", payload);
 
-            console.log("RESPONSE DATA:", response.data);
             onResults(response.data.rows);
+            onResults(
+                response.data.rows.map((row: RawRow[]) => ({
+                id: row[0],
+                nome: row[1],
+                cpf: row[2]
+            }))
+);
 
         } catch (err) {
             console.error("Erro ao buscar:", err);

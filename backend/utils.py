@@ -228,3 +228,50 @@ def get_next_id(path: Path) -> int:
 
     last_id = int(rows[-1][0])
     return last_id + 1
+
+
+# ------------------------------------------------------------
+# Parte do código que consegue reescrever algo
+# ------------------------------------------------------------
+
+def write_csv(path: Path, rows: list[list]):
+    with open(path, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerows(rows)
+
+
+def write_xls(path: Path, rows: list[list]):
+    wb = xlwt.Workbook()
+    sheet = wb.add_sheet("Sheet1")
+
+    for r, row in enumerate(rows):
+        for c, val in enumerate(row):
+            sheet.write(r, c, val)
+
+    wb.save(path)
+
+
+def write_xlsx(path: Path, rows: list[list]):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    for row in rows:
+        ws.append(row)
+
+    wb.save(path)
+
+
+def write_rows(path: Path, rows: list[list]):
+    ext = str(path).lower()
+
+    if ext.endswith(".csv"):
+        return write_csv(path, rows)
+
+    if ext.endswith(".xls"):
+        return write_xls(path, rows)
+
+    if ext.endswith(".xlsx") or ext.endswith(".xlsm"):
+        return write_xlsx(path, rows)
+
+    raise ValueError(f"Formato não suportado: {path}")
+        

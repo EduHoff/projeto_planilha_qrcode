@@ -1,6 +1,5 @@
 services:
   backend:
-    user: "${UID}:${GID}"
     build: ./backend
     container_name: backend
     ports:

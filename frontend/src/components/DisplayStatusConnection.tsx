@@ -4,6 +4,7 @@ import api from "../api/client";
 const DisplayStatusConnection: React.FC = () => {
   const [message, setMessage] = useState<string>("Carregando...");
   const [apiError, setApiError] = useState<boolean>(false);
+  const [reloadFlag, setReloadFlag] = useState(true);
 
   const userPath = localStorage.getItem("UserPath");
 
@@ -22,6 +23,9 @@ const DisplayStatusConnection: React.FC = () => {
           setApiError(true);
         } else {
           setApiError(false);
+          if(reloadFlag){
+            setReloadFlag(false)
+          }
         }
       })
       .catch(error => {
@@ -29,7 +33,7 @@ const DisplayStatusConnection: React.FC = () => {
         setMessage("Erro ao conectar com o servidor");
         setApiError(true);
       });
-  }, []);
+  }, [reloadFlag]);
 
   return (
     <div>

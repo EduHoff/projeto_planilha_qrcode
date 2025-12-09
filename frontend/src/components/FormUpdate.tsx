@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../api/client";
+import { GlobalStyle } from "../styles/GlobalStyle";
 
 interface FormUpdateProps {
     ids: string[];
@@ -39,31 +40,15 @@ function FormUpdate({ ids }: FormUpdateProps) {
     };
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "20px" }}>
+        <div style={GlobalStyle.container}>
             <h3>Atualizar TODOS os resultados exibidos</h3>
 
             <p><strong>Total selecionado:</strong> {ids.length}</p>
 
-            <input
-                type="text"
-                placeholder="Novo nome (opcional)"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-            />
+            <input type="text" placeholder="Novo nome (opcional)" style={GlobalStyle.input} value={nome} onChange={(e) => setNome(e.target.value)}/>
+            <input type="text" placeholder="Novo CPF (opcional)" style={GlobalStyle.input} value={cpf} onChange={(e) => setCpf(e.target.value)}/>
 
-            <input
-                type="text"
-                placeholder="Novo CPF (opcional)"
-                value={cpf}
-                onChange={(e) => setCpf(e.target.value)}
-            />
-
-            <button
-                onClick={handleUpdate}
-                style={{ width: 150, display: "flex", justifyContent: "center" }}
-            >
-                Atualizar Todos
-            </button>
+            <button onClick={handleUpdate} style={GlobalStyle.button}>Atualizar Todos</button>
         </div>
     );
 }

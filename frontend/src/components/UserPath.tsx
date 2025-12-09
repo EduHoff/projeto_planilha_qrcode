@@ -1,5 +1,8 @@
 import { useState } from "react"
 import api from "../api/client";
+import { GlobalStyle } from "../styles/GlobalStyle";
+//import { UserPathStyle } from "../styles/UserPathStyle";
+
 
 function UserPath() {
     const [path, setPath] = useState<string>("")
@@ -54,15 +57,16 @@ function UserPath() {
     
 
   return (
-    <div style={{display:"flex",flexDirection:"column"}}>
+    <div style={GlobalStyle.container}>
         <input 
             type="text" 
             placeholder="C:/pasta/planilha.xlsx"
+            style={GlobalStyle.input}
             value={path} 
             onChange={handleInputChange} 
         />
 
-        <button onClick={handleSubmit} style={{width: 100, display: "flex", justifyContent: "center", alignItems: "center"}}>Confirmar</button>
+        <button onClick={handleSubmit} style={GlobalStyle.button}>Confirmar</button>
     </div>
   );
 }

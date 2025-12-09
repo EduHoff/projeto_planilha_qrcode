@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../api/client";
 import type { NotaFiscal } from "../entities/NotaFiscal";
+import { GlobalStyle } from "../styles/GlobalStyle";
 
 type SearchField = "tudo" | "id" | "nome";
 type RawRow = [string, string, string];
@@ -54,6 +55,7 @@ function FormSearch({ onResults }: FormSearchProps) {
                     step={1}
                     min={1}
                     placeholder={`Pesquisar por ${field}`}
+                    style={GlobalStyle.input}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                 />)
@@ -61,6 +63,7 @@ function FormSearch({ onResults }: FormSearchProps) {
                 return (<input
                     type="text"
                     placeholder={`Pesquisar por ${field}`}
+                    style={GlobalStyle.input}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                 />)
@@ -71,18 +74,9 @@ function FormSearch({ onResults }: FormSearchProps) {
 
 
     return (
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-            marginTop: "20px"
-        }}>
+        <div style={GlobalStyle.container}>
             
-            <select
-                value={field}
-                onChange={(e) => setField(e.target.value as SearchField)}
-                style={{ padding: "5px" }}
-            >
+            <select value={field} onChange={(e) => setField(e.target.value as SearchField)} style={GlobalStyle.select}>
                 <option value="tudo">Tudo</option>
                 <option value="id">ID</option>
                 <option value="nome">Nome</option>
@@ -90,17 +84,7 @@ function FormSearch({ onResults }: FormSearchProps) {
 
             {handleOption()}
 
-            <button
-                onClick={handleSearch}
-                style={{
-                    width: 120,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}
-            >
-                Buscar
-            </button>
+            <button onClick={handleSearch} style={GlobalStyle.button}>Buscar</button>
         </div>
     );
 }

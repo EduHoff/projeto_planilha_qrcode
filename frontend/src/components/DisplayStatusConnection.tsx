@@ -4,7 +4,6 @@ import api from "../api/client";
 const DisplayStatusConnection: React.FC = () => {
   const [message, setMessage] = useState<string>("Carregando...");
   const [apiError, setApiError] = useState<boolean>(false);
-  const [reloadFlag, setReloadFlag] = useState(true);
 
   const userPath = localStorage.getItem("UserPath");
 
@@ -13,27 +12,25 @@ const DisplayStatusConnection: React.FC = () => {
     }
 
   useEffect(() => {
-    api.get("/api/hello")
-      .then(response => {
+  api.get("/api/hello")
+    .then(response => {
 
-        const msg = response.data.message;
-        setMessage(msg);
+      const msg = response.data.message;
+      setMessage(msg);
 
-        if (isStringEmptyOrNull(msg)) {
-          setApiError(true);
-        } else {
-          setApiError(false);
-          if(reloadFlag){
-            setReloadFlag(false)
-          }
-        }
-      })
-      .catch(error => {
-        console.error("Erro ao buscar dados:", error);
-        setMessage("Erro ao conectar com o servidor");
+      if (isStringEmptyOrNull(msg)) {
         setApiError(true);
-      });
-  }, [reloadFlag]);
+      } else {
+        setApiError(false);
+      }
+
+    })
+    .catch(error => {
+      console.error("Erro ao buscar dados:", error);
+      setMessage("Erro ao conectar com o servidor");
+      setApiError(true);
+    });
+}, []);
 
   return (
     <div>

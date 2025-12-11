@@ -7,18 +7,18 @@ Pré requisitos:
 - Docker
 
 Linux, MacOS ou Unix-like:
-```bash
+```Bash
 git clone https://github.com/EduHoff/projeto_planilha_qrcode.git
 cd projeto_planilha_qrcode
 chmod +x start.sh
-./start.sh --build
+./start.sh
 ```
 
 Windows:
-```cmd
+```PowerShell
 git clone https://github.com/EduHoff/projeto_planilha_qrcode.git
 cd projeto_planilha_qrcode
-start.bat --build
+./start.bat
 ```
 
 ## Iniciar
